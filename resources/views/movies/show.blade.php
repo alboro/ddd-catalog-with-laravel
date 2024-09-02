@@ -4,8 +4,8 @@
 
 @section('content')
     <h1>{{ $movie->title }}</h1>
-    <p>description: {{ $movie->description }}</p>
     <p>Release Year: {{ $movie->year }}</p>
+    <p>{{ $movie->description }}</p>
     <a href="{{ route('movies.edit', $movie->id) }}" class="btn btn-primary">Edit</a>
     <form action="{{ route('movies.destroy', $movie->id) }}" method="POST" style="display:inline;">
         @csrf

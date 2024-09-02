@@ -16,15 +16,15 @@ use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 
 /**
- * GET /movies - Displays a list of all movies (index method).
- * GET /movies/create - Displays a form for creating a new movie (create method).
- * POST /movies - Handles creating a new movie (store method).
- * GET /movies/{movie} - Displays a specific movie (show method).
- * GET /movies/{movie}/edit - Displays a form for editing a movie (edit method).
- * PUT/PATCH /movies/{movie} - Handles updating a movie (update method).
- * DELETE /movies/{movie} - Handles deleting a movie (destroy method).
+ * GET /movies-vue - Displays a list of all movies (index method).
+ * GET /movies-vue/create - Displays a form for creating a new movie (create method).
+ * POST /movies-vue - Handles creating a new movie (store method).
+ * GET /movies-vue/{movie} - Displays a specific movie (show method).
+ * GET /movies-vue/{movie}/edit - Displays a form for editing a movie (edit method).
+ * PUT/PATCH /movies-vue/{movie} - Handles updating a movie (update method).
+ * DELETE /movies-vue/{movie} - Handles deleting a movie (destroy method).
  */
-class MovieController extends Controller
+class MovieVueController extends Controller
 {
     public function __construct(
         private readonly ListMoviesHandlerInterface $listMoviesHandler,
@@ -35,36 +35,39 @@ class MovieController extends Controller
     ) {
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->isXmlHttpRequest()) {
+            return view('welcome');
+        }
         $movies = $this->listMoviesHandler->handle(new ListMoviesQuery());
 
-        return view('movies.index', ['movies' => $movies]);
+        return response()->json($movies);
     }
 
     public function create()
     {
-        return view('movies.create');
+        return view('welcome');
     }
 
     /**
      * Display the specified movie.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        if (!$request->isXmlHttpRequest()) {
+            return view('welcome');
+        }
         $command = new ReadMovieQuery(Uuid::fromString($id));
 
-        return view('movies.show', ['movie' => $this->readMovieHandler->handle($command)]);
+        return response()->json($this->readMovieHandler->handle($command));
     }
 
-    /**
-     * Show the form for editing the specified movie.
-     */
     public function edit($id)
     {
         $command = new ReadMovieQuery(Uuid::fromString($id));
 
-        return view('movies.edit', ['movie' => $this->readMovieHandler->handle($command)]);
+        return response()->json($this->readMovieHandler->handle($command));
     }
 
     public function store(Request $request)
@@ -77,9 +80,7 @@ class MovieController extends Controller
         );
         $this->createMovieHandler->handle($command);
 
-        return response()
-            ->redirectToRoute('movies.index')
-            ->with('message', 'Movie created successfully.');
+        return response()->json(['message' => 'Movie created successfully.']);
     }
 
     /**
@@ -96,9 +97,7 @@ class MovieController extends Controller
 
         $this->updateMovieHandler->handle($command);
 
-        return response()
-            ->redirectToRoute('movies.index')
-            ->with('message', 'Movie updated successfully.');
+        return response()->json(['message' => 'Movie updated successfully.']);
     }
 
     /**
@@ -109,8 +108,6 @@ class MovieController extends Controller
         $command = new DeleteMovieCommand(Uuid::fromString($id));
         $this->deleteMovieHandler->handle($command);
 
-        return response()
-            ->redirectToRoute('movies.index')
-            ->with('message', 'Movie deleted successfully.');
+        return response()->json(['message' => 'Movie deleted successfully.']);
     }
 }

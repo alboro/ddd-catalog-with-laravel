@@ -7,5 +7,5 @@ use App\Application\Dto\MovieDto;
 
 interface ReadMovieHandlerInterface
 {
-    public function handle(ReadMovieQuery $command): MovieDto;
+    public function handle(ReadMovieQuery $query): MovieDto;
 }

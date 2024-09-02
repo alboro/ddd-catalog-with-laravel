@@ -15,7 +15,7 @@
             <input type="text" id="description" name="description">
         </div>
         <div>
-            <label for="year">Release Year</label>
+            <label for="year">Year</label>
             <input type="number" id="year" name="year">
         </div>
         <button type="submit" class="btn btn-primary">Save</button>

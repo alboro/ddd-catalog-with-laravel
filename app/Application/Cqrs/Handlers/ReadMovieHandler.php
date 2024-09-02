@@ -16,9 +16,9 @@ final readonly class ReadMovieHandler implements ReadMovieHandlerInterface
     ) {
     }
 
-    public function handle(ReadMovieQuery $command): MovieDto
+    public function handle(ReadMovieQuery $query): MovieDto
     {
-        $movie = $this->repository->findById($command->id);
+        $movie = $this->repository->findById($query->id);
 
         return $this->movieAssembler->createDto($movie);
     }

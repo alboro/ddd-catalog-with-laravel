@@ -1,0 +1,10 @@
+body {
+    margin: 8px;
+}
+* {
+    margin: 0;
+    margin-right: 3px;
+}
+h1 {
+    margin: 23px 0 23px 0;
+}
