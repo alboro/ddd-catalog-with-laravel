@@ -7,5 +7,5 @@ use App\Domain\Entities\Movie;
 
 interface MovieAssemblerInterface
 {
-    public function createDto(Movie $movie): MovieDto;
+    public function createDto(Movie $movie, ?int $likeCount): MovieDto;
 }

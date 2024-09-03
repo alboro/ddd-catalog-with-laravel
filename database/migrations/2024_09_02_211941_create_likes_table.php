@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movies', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('title')->nullable(false);
-            $table->text('description');
-            $table->integer('year')->nullable(false);
+            $table->uuid('movie_id');
+
+            // foreign key
+            $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists('likes');
     }
 };

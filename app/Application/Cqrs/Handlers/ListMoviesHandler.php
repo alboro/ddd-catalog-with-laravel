@@ -27,6 +27,6 @@ final readonly class ListMoviesHandler implements ListMoviesHandlerInterface
     {
         $movies = $this->repository->findAll(SortType::year);
 
-        return array_map(fn (Movie $movie): MovieDto => $this->movieAssembler->createDto($movie), $movies);
+        return array_map(fn (Movie $movie): MovieDto => $this->movieAssembler->createDto($movie, null), $movies);
     }
 }

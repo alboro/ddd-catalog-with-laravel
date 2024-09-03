@@ -9,5 +9,7 @@ final readonly class MovieDto
         public string $title,
         public string $description,
         public int $year,
-    ) {}
+        public ?int $likeCount,
+    ) {
+    }
 }

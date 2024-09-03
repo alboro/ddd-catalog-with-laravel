@@ -10,21 +10,21 @@ use App\Domain\Repositories\MovieRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\UuidInterface;
 
-class EloquentMovieRepository implements MovieRepositoryInterface
+readonly class EloquentMovieRepository implements MovieRepositoryInterface
 {
     private const TABLE = 'movies';
 
     public function __construct(
-        private readonly MovieHydratorInterface $movieHydrator,
-        private readonly MovieToColumnsTransformerInterface $columnsTransformer,
+        private MovieHydratorInterface $movieHydrator,
+        private MovieToColumnsTransformerInterface $columnsTransformer,
     ) {
     }
 
     public function save(Movie $movie): void
     {
         DB::table(self::TABLE)->updateOrInsert(
-            $this->columnsTransformer->criteria($movie),
-            $this->columnsTransformer->simpleFields($movie)
+            ['id' => $movie->id()->toString()],
+            $this->columnsTransformer->transform($movie)
         );
     }
 
