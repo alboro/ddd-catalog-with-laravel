@@ -70,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MovieHydratorInterface::class, MovieHydrator::class);
         $this->app->bind(CommentHydratorInterface::class, CommentHydrator::class);
         $this->app->bind(MovieToColumnsTransformerInterface::class, MovieToColumnsTransformer::class);
-        $this->app->bind(CommentToColumnsTransformerInterface::class, CommentToColumnsTransformer   ::class);
+        $this->app->bind(CommentToColumnsTransformerInterface::class, CommentToColumnsTransformer::class);
     }
 
     /**
